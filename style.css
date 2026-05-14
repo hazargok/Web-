@@ -1,0 +1,581 @@
+/*
+  Yıldız (*) seçicisi sayfadaki TÜM HTML etiketlerini hedefler.
+*/
+*{
+    /* Genişlik (width) ve yüksekliğe (height) padding ve border değerlerini dahil eder. 
+       Böylece elemana boşluk eklediğinizde elemanın dışa doğru büyümesini engeller. */
+    box-sizing:border-box;
+}
+
+/* Sayfanın ana gövdesini (body) biçimlendirir. */
+body{
+    /* Tarayıcının varsayılan dış boşluklarını (margin) sıfırlar. */
+    margin:0;
+    /* Sayfanın minimum yüksekliğini ekran yüksekliğinin tamamı (100vh = Viewport Height) yapar. */
+    min-height:100vh;
+    /* Sayfaya çok katmanlı, karmaşık bir arka plan ekler: 
+       1. Üst solda %30'a kadar yayılan mor bir ışık parlaması,
+       2. Alt sağda %25'e kadar yayılan camgöbeği/mavi bir ışık parlaması,
+       3. En altta ise çapraz (135 derece) uzanan çok koyu mavi/siyah tonlarında genel bir renk geçişi (linear-gradient). */
+    background:
+        radial-gradient(circle at 20% 10%, rgba(111,0,255,0.22), transparent 30%),
+        radial-gradient(circle at 80% 40%, rgba(0,225,255,0.12), transparent 25%),
+        linear-gradient(135deg,#060616,#080a16,#05020c);
+    /* Yazı rengini beyaz (#fff) yapar. */
+    color:#fff;
+    /* Sayfanın genel yazı tipini 'Orbitron' yapar, eğer cihazda yoksa herhangi bir tırnaksız (sans-serif) yazı tipi kullanır. */
+    font-family:'Orbitron',sans-serif;
+    /* Yatayda (sağa-sola) sayfanın taşmasını engeller ve yatay kaydırma çubuğunu gizler. */
+    overflow-x:hidden;
+}
+
+/* Arka plandaki sabit "yıldızlar" efektini oluşturacak katman. */
+.stars{
+    /* Elemanı ekrana sabitler, sayfa aşağı kaydırılsa bile arka plan yerinde kalır. */
+    position:fixed;
+    /* Top, right, bottom ve left değerlerinin hepsini birden 0 yapar. (Eleman tüm ekranı kaplar) */
+    inset:0;
+    /* Fare tıklamalarının bu katmana takılmasını engeller, tıklamalar bu katmanın altındaki asıl elemanlara geçer. */
+    pointer-events:none;
+    /* İki farklı dairesel geçiş ile küçük noktalar (yıldızlar) çizer. */
+    background-image:
+        radial-gradient(#ffffff66 1px, transparent 1px),
+        radial-gradient(#00eaff55 1px, transparent 1px);
+    /* Çizilen bu küçük noktaların ekranda ne kadar aralıklarla tekrar edeceğini (biri 160px, diğeri 260px kareler halinde) belirler. */
+    background-size:160px 160px, 260px 260px;
+    /* Bu katmanın saydamlığını (opaklık) %25'e düşürür ki asıl içeriği bastırmasın. */
+    opacity:.25;
+}
+
+/* Kahraman (Hero) veya ana giriş bölümünü kapsar. */
+.hero{
+    /* İç boşluk: Üstten 90 piksel, sağ/soldan 0, alttan 40 piksel. */
+    padding:90px 0 40px;
+}
+
+/* Ana logonun veya büyük başlığın tasarımı.    MoodTune*/
+.logo{
+    /* Yazı boyutunu çok büyük (64 piksel) yapar. */
+    font-size:64px;
+    /* Yazı kalınlığını 800 (oldukça kalın) yapar. */
+    font-weight:800;
+    /* Harflerin arasına 4 piksellik boşluk ekler. */
+    letter-spacing:4px;
+    /* Yazının arka planına soldan sağa (90 derece) mor ve pembe tonlarında bir renk geçişi uygular. */
+    background:linear-gradient(90deg,#7468ff,#d000ff,#ff00c8);
+    /* Renk geçişi olan arka planı sadece harflerin şekline göre kırpar (maskeler). */
+    -webkit-background-clip:text;
+    /* Yazının orijinal rengini şeffaf yapar ki alttaki kırpılmış renkli arka plan yazının rengiymiş gibi görünsün. */
+    -webkit-text-fill-color:transparent;
+    /* Yazının etrafına 30 piksel yayılıma sahip mor/pembe renkli bir parlama (gölge) efekti verir. */
+    text-shadow:0 0 30px rgba(208,0,255,.5);
+}
+
+/* Logonun/başlığın altındaki küçük açıklama metni.RUH HALİNE GÖRE MÜZİK · MOOD BASED MUSIC
+
+ */
+.subtitle{
+    /* Elemanın üstünden dışa doğru 25 piksel boşluk bırakır. */
+    margin-top:25px;
+    /* Yazı rengini soluk bir lila/gri (#8d8abe) tonuna getirir. */
+    color:#8d8abe;
+    /* Harflerin arasına çok geniş (12 piksel) boşluk bırakır. */
+    letter-spacing:12px;
+    /* Yazı boyutunu 15 piksel yapar. */
+    font-size:15px;
+}
+
+/* Ses dalgası animasyonu yapan çubukları (ekolayzır) saran taşıyıcı kutu. */
+.equalizer{
+    /* Kutunun yüksekliğini 70 piksel yapar. */
+    height:70px;
+    /* İçindeki çubukları yan yana ve esnek dizebilmek için Flexbox yapısını kullanır. */
+    display:flex;
+    /* İçindeki çubukları yatay olarak kutunun tam ortasına hizalar. */
+    justify-content:center;
+    /* İçindeki çubukları dikey olarak kutunun ortasına hizalar. */
+    align-items:center;
+    /* Çubuklar arasında 6 piksellik boşluk bırakır. */
+    gap:6px;
+}
+
+/* Ekolayzır içindeki her bir dikey çubuk (span etiketi). */
+.equalizer span{
+    /* Çubuğun genişliğini 6 piksel yapar. */
+    width:6px;
+    /* Çubuğun başlangıç yüksekliğini 25 piksel yapar. */
+    height:25px;
+    /* Çubukların köşelerini 10 piksel yuvarlatarak oval bir görünüm verir. */
+    border-radius:10px;
+    /* Çubuğun rengini parlak bir camgöbeği/mavi yapar. */
+    background:#00f7ff;
+    /* Çubuğun etrafına mavi renkli bir parlama (neon gölge) efekti ekler. */
+    box-shadow:0 0 15px #00f7ff;
+    /* "beat" adlı animasyonu uygular: 0.8 saniyede bir, sonsuza kadar (infinite) çalışır ve bitince tersine döner (alternate). */
+    animation:beat .8s infinite alternate;
+}
+
+/* Ekolayzırın sadece 2. ve 4. sıradaki çubuklarını hedefler. */
+.equalizer span:nth-child(2),
+.equalizer span:nth-child(4){
+    /* Bu çubukların rengini parlak pembe yapar. */
+    background:#ff00d4;
+    /* Etraflarındaki parlamayı da aynı parlak pembeye çevirir. */
+    box-shadow:0 0 15px #ff00d4;
+    /* Diğer çubuklarla aynı anda hareket etmemeleri için animasyonlarını 0.2 saniye gecikmeli başlatır. */
+    animation-delay:.2s;
+}
+
+/* Ekolayzırın sadece 3. sıradaki (ortadaki) çubuğunu hedefler. */
+.equalizer span:nth-child(3){
+    /* Ortadaki çubuğun başlangıç boyunu diğerlerinden daha uzun (40 piksel) yapar. */
+    height:40px;
+    /* Animasyonunu diğerlerinden 0.4 saniye gecikmeli başlatarak dalga efekti oluşturur. */
+    animation-delay:.4s;
+}
+
+/* Çubukların yukarı-aşağı hareketini sağlayan "beat" (vuruş) animasyonunun kuralları. */
+@keyframes beat{
+    /* Animasyon başladığında (veya en düşük noktasında) çubukların yüksekliği 12 piksel olur. */
+    from{height:12px;}
+    /* Animasyon bittiğinde (veya en yüksek noktasında) çubukların yüksekliği 42 piksel olur. */
+    to{height:42px;}
+}
+
+/* Alt bölümlerin başlık (Section Title) tasarımları.   // RUH HALİNİ SEÇ */
+.section-title{
+    /* Rengi parlak camgöbeği/mavi yapar. */
+    color:#00f7ff;
+    /* Mavi renkte neon parlama efekti (gölge) verir. */
+    text-shadow:0 0 15px #00f7ff;
+    /* Harfler arasına 6 piksel boşluk koyar. */
+    letter-spacing:6px;
+    /* Yazı boyutunu 16 piksel yapar. */
+    font-size:16px;
+    /* Dış boşluk: Üstten 25 piksel, yanlardan 0, alttan 35 piksel. */
+    margin:25px 0 35px;
+}
+
+/* Ruh hali (Mood) veya kategori seçeneklerini saran ana alan.  cizgi */
+.mood-area{
+    /* Alanın en üstüne camgöbeği renginde, %20 görünürlükte çok hafif 1 piksellik bir sınır çizgisi çizer. */
+    border-top:1px solid rgba(0,247,255,.2);
+    /* Çizgiden sonra içeriğin başlaması için üstten 45 piksellik iç boşluk bırakır. */
+    padding-top:45px;
+}
+
+/* Her bir ruh hali/seçenek kartının tasarımı. */
+.mood-card{
+    /* Kartın arka plan rengini koyu lacivert yapar ve hafif saydam (%90) bırakır. */
+    background:rgba(18,18,42,.9);
+    /* Kartın etrafına çok ince, beyaz renkli ve neredeyse şeffaf (%10) bir çerçeve ekler. */
+    border:1px solid rgba(255,255,255,.1);
+    /* Kartın köşelerini 20 piksel yuvarlatır. */
+    border-radius:20px;
+    /* İç boşluk: Üst ve alttan 28 piksel, sağ ve soldan 15 piksel. */
+    padding:28px 15px;
+    /* Kartın her durumda en az 145 piksel yüksekliğinde olmasını garantiler. */
+    min-height:145px;
+    /* Farenin (mouse) kartın üzerine geldiğinde işaretçinin el simgesine (tıklanabilir) dönüşmesini sağlar. */
+    cursor:pointer;
+    /* Karta eklenecek olası değişim efektlerinin (örneğin üzerine fare ile gelince (hover) rengin değişmesi gibi) 0.3 saniye içinde yumuşak bir geçişle olmasını sağlar. */
+    transition:.3s;
+}
+
+/* Farenin kartın üzerine geldiği (:hover) VEYA kartın seçili olduğu (.active) durumları hedefler. */
+.mood-card:hover,
+.mood-card.active{
+    /* Çerçeveyi 2 piksel kalınlığında, düz ve parlak mavi (camgöbeği) rengine dönüştürür. */
+    border:2px solid #00bfff;
+    /* Kartın etrafına mavi renkte %60 saydamlığa sahip parlak bir dış gölge (neon efekti) ekler. */
+    box-shadow:0 0 25px rgba(0,191,255,.6);
+    /* Kartı Y ekseninde (dikeyde) 6 piksel yukarı doğru kaldırır (hareket ettirir). */
+    transform:translateY(-6px);
+}
+
+/* Ruh hali kartlarının içindeki emojilerin tasarımı. */
+.emoji{
+    /* Emojinin boyutunu 52 piksel yaparak büyütür. */
+    font-size:52px;
+    /* Emojinin şekline uygun (kutuya değil, emojinin kendi dış hatlarına) beyaz, %70 saydam bir parlama efekti verir. */
+    filter:drop-shadow(0 0 18px rgba(255,255,255,.7));
+}
+
+/* Ruh hali kartının içindeki başlıkları (h5 etiketlerini) hedefler. */
+.mood-card h5{
+    /* Emojiden sonra 16 piksel üst boşluk bırakır. */
+    margin-top:16px;
+    /* Yazı rengini soluk/açık bir mor-mavi tona (#d8d6ff) getirir. */
+    color:#d8d6ff;
+    /* Yazı boyutunu 15 piksel yapar. */
+    font-size:15px;
+    /* Yazı kalınlığını 800 (ekstra kalın) yapar. */
+    font-weight:800;
+    /* Harfler arasına 2 piksellik küçük bir boşluk ekler. */
+    letter-spacing:2px;
+}
+
+/* YALNIZCA seçili (active) olan ruh hali kartının içindeki başlıkları hedefler. */
+.mood-card.active h5{
+    /* Yazı rengini parlak camgöbeği/mavi yapar. */
+    color:#00d9ff;
+    /* Yazının etrafına aynı parlak mavi renkte neon bir gölge/parlama ekler. */
+    text-shadow:0 0 15px #00d9ff;
+}
+
+/* Filtre seçeneklerini (örneğin tür, tempo) yan yana dizecek olan ana taşıyıcı alan. */
+.filters{
+    /* İçerisindeki elemanları CSS Grid (ızgara) sistemiyle yerleştirir. */
+    display:grid;
+    /* Izgarayı yan yana 2 eşit sütuna (1fr 1fr - fraction) böler. */
+    grid-template-columns:1fr 1fr;
+    /* Sütunlar ve satırlar arasında 30 piksellik boşluk bırakır. */
+    gap:30px;
+    /* Üstündeki elemandan 20 piksel uzaklaşır. */
+    margin-top:20px;
+}
+
+/* Her bir filtre kategorisini (örneğin "Türler" veya "Tempolar") saran kutunun tasarımı. */
+.filter-box{
+    /* Arka planını çok koyu lacivert ve hafif saydam (%82) yapar. */
+    background:rgba(18,18,42,.82);
+    /* Etrafına çok ince, beyaz ve %10 görünürlüğünde bir çizgi (border) ekler. */
+    border:1px solid rgba(255,255,255,.1);
+    /* Kutunun köşelerini 22 piksel yuvarlatır. */
+    border-radius:22px;
+    /* İçeriğin kutu kenarlarına yapışmaması için her yönden 28 piksel iç boşluk verir. */
+    padding:28px;
+}
+
+/* Filtre kutularının başlıkları (örneğin "TÜR SEÇİN"). */
+.filter-box h6{
+    /* Yazı rengini soluk bir gri/mor yapar. */
+    color:#8d8abe;
+    /* Harflerin arasını 6 piksel açar. */
+    letter-spacing:6px;
+    /* Başlığın altındaki butonlarla arasına 20 piksellik boşluk bırakır. */
+    margin-bottom:20px;
+}
+
+/* Filtre ve Tempo seçeneklerini temsil eden küçük butonların ortak tasarımı. */
+.filter-btn,
+.tempo-btn{
+    /* Butonların etrafına beyaz ve %15 görünürlüğünde ince bir sınır çizer. */
+    border:1px solid rgba(255,255,255,.15);
+    /* Butonların arka planını neredeyse şeffaf (%5) beyaz yapar. */
+    background:rgba(255,255,255,.05);
+    /* Yazı rengini açık mor/gri bir tona getirir. */
+    color:#a6a2d7;
+    /* Butonların kenarlarını 30 piksel yuvarlatarak hap/kapsül şekli verir. */
+    border-radius:30px;
+    /* İç boşluk: Üst/alt 10 piksel, sağ/sol 20 piksel. */
+    padding:10px 20px;
+    /* Butonların dışından her yöne 6 piksel boşluk vererek birbirlerine yapışmalarını önler. */
+    margin:6px;
+    /* Yazıları kalın (700) yapar. */
+    font-weight:700;
+    /* Hover veya active durumlarına geçerken animasyonun 0.3 saniyede yumuşakça olmasını sağlar. */
+    transition:.3s;
+}
+
+/* Butonların üzerine fare ile gelindiğinde VEYA buton seçili (.active) olduğunda uygulanacak kurallar. */
+.filter-btn:hover,
+.tempo-btn:hover,
+.filter-btn.active,
+.tempo-btn.active{
+    /* Yazı rengini parlak mavi/camgöbeği yapar. */
+    color:#00f7ff;
+    /* Çerçeve rengini aynı parlak mavi yapar. */
+    border-color:#00f7ff;
+    /* Butonun etrafına mavi renkli bir parlama (neon gölge) efekti verir. */
+    box-shadow:0 0 15px rgba(0,247,255,.5);
+}
+
+/* Şarkı veya sonuç "Öner" (Suggest) ana butonunun tasarımı. */
+.suggest-btn{
+    /* Üstten 50px boşluk bırakır, sağdan-soldan otomatik hizalayarak ortalar (auto) ve alttan 50px boşluk bırakır. */
+    margin:50px auto;
+    /* İç boşluk: Üst/alt 22 piksel, sağ/sol 85 piksel (geniş bir buton yapar). */
+    padding:22px 85px;
+    /* Kenarları tamamen yuvarlatır. */
+    border-radius:50px;
+    /* 2 piksel kalınlığında, parlak mavi renkli bir çerçeve ekler. */
+    border:2px solid #00f7ff;
+    /* Butonun arka plan rengini kaldırır (şeffaf yapar). */
+    background:transparent;
+    /* Yazı rengini parlak mavi yapar. */
+    color:#00f7ff;
+    /* Yazı boyutunu 18 piksel yapar. */
+    font-size:18px;
+    /* Harflerin arasını 4 piksel açar. */
+    letter-spacing:4px;
+    /* Yazıyı ekstra kalın (800) yapar. */
+    font-weight:800;
+    /* Butonun dışına mavi bir parlama efekti verir. */
+    box-shadow:0 0 25px rgba(0,247,255,.35);
+    /* Değişimlerin 0.3 saniyede gerçekleşmesini sağlar. */
+    transition:.3s;
+}
+
+/* "Öner" ana butonunun üzerine fare ile gelindiğinde (.hover) uygulanacak kurallar. */
+.suggest-btn:hover{
+    /* Butonun içini tamamen mavi renkle doldurur. */
+    background:#00f7ff;
+    /* Yazı rengini sayfa arka planına benzeyen çok koyu laciverde çevirir (zıtlık yaratır). */
+    color:#060616;
+    /* Parlama efektini daha güçlü ve geniş hale getirir. */
+    box-shadow:0 0 40px rgba(0,247,255,.8);
+}
+
+/* Sonuçların listelendiği ve Favorilerin bulunduğu bölümlerin dış kapsayıcıları. */
+.results,
+.favorites{
+    /* Kendilerinden önceki elemanlarla (örneğin butonla) aralarında üstten 40 piksel boşluk bırakırlar. */
+    margin-top:40px;
+}
+
+/* Sonuçlar bölümünün başlık kısmı (başlık ve karıştır butonunu yan yana tutan alan). */
+.result-head{
+    /* İçindeki elemanları (başlık ve buton) aynı satırda esnek şekilde dizmek için Flexbox kullanır. */
+    display:flex;
+    /* Elemanları birbirinden en uzak noktalara (biri en sola, diğeri en sağa) iter. */
+    justify-content:space-between;
+    /* Elemanları dikeyde tam ortalayarak aynı hizada durmalarını sağlar. */
+    align-items:center;
+    /* Altındaki içerik listesiyle arasına 35 piksel boşluk bırakır. */
+    margin-bottom:35px;
+}
+
+/* Sonuçlar ve Favoriler bölümündeki alt başlıkların (h4) tasarımı. */
+.result-head h4,
+.favorites h4{
+    /* Yazı rengini parlak mavi/camgöbeği yapar. */
+    color:#00f7ff;
+    /* Harfler arasına 5 piksel boşluk koyar. */
+    letter-spacing:5px;
+    /* Yazı boyutunu 18 piksel yapar. */
+    font-size:18px;
+    /* Yazıya mavi bir neon parlama efekti (gölge) ekler. */
+    text-shadow:0 0 12px #00f7ff;
+}
+
+/* Çıkan sonuçlarla ilgili bir bilgiyi (örneğin "Sizin için 5 sonuç bulundu") gösteren özel metin alanı. */
+#resultInfo{
+    /* Hem satır içi (metinle aynı hizada) davranmasını hem de margin/padding gibi blok özelliklerini almasını sağlar. */
+    display:inline-block;
+    /* Üstten 10 piksel boşluk bırakır. */
+    margin-top:10px;
+    /* İç boşluk: Üst/alt 12 piksel, sağ/sol 25 piksel. */
+    padding:12px 25px;
+    /* Köşeleri 30 piksel yuvarlatır. */
+    border-radius:30px;
+    /* 1 piksel kalınlığında sarı renkli (#fff200) bir çerçeve ekler. */
+    border:1px solid #fff200;
+    /* Yazı rengini beyaz yapar. */
+    color:#fff;
+    /* Kutunun etrafına sarı renkli, %60 görünürlükte bir parlama efekti ekler. */
+    box-shadow:0 0 15px rgba(255,242,0,.6);
+}
+
+/* Karıştır (Shuffle) butonunun tasarımı. */
+.shuffle-btn{
+    /* Arka planı şeffaf yapar. */
+    background:transparent;
+    /* %20 beyaz opaklığında çok ince bir çerçeve çizer. */
+    border:1px solid rgba(255,255,255,.2);
+    /* Yazı rengini açık mor/gri yapar. */
+    color:#a6a2d7;
+    /* Kenarları 30 piksel yuvarlatarak hap görünümü verir. */
+    border-radius:30px;
+    /* İç boşluk: Üst/alt 12 piksel, sağ/sol 25 piksel. */
+    padding:12px 25px;
+}
+/* Şarkı kartının ana taşıyıcısı. */
+.song-card{
+    /* İçindeki mutlak konumlandırılmış (absolute) elemanlar için bir referans noktası oluşturur. */
+    position:relative;
+    /* İçerisindeki elemanları (ikon, metinler, butonlar) esnek bir şekilde dizmek için Flexbox kullanır. */
+    display:flex;
+    /* İçindeki elemanları dikey olarak tam ortalar. */
+    align-items:center;
+    /* İçindeki elemanlar (ikon ile metin, metin ile buton vs.) arasında 20 piksellik boşluk bırakır. */
+    gap:20px;
+    /* Arka planı koyu lacivert ve %95 oranında opak (neredeyse tamamen düz renk) yapar. */
+    background:rgba(18,18,42,.95);
+    /* Kartın etrafına %8 beyaz saydamlığında, çok ince ve zarif bir çerçeve çizer. */
+    border:1px solid rgba(255,255,255,.08);
+    /* Kartın sol tarafına 5 piksel kalınlığında sarı renkli vurgu çizgisi ekler. */
+    border-left:5px solid #fff200;
+    /* Kartın köşelerini 18 piksel yuvarlatır. */
+    border-radius:18px;
+    /* Kartın iç kenarlarından 24 piksellik iç boşluk bırakır. */
+    padding:24px;
+    /* Kartın yüksekliğinin her koşulda en az 130 piksel olmasını garantiler. */
+    min-height:130px;
+    /* Fareyle üzerine gelme (hover) gibi efektlerin 0.3 saniyede yumuşakça gerçekleşmesini sağlar. */
+    transition:.3s;
+}
+
+/* Farenin şarkı kartının üzerine gelmesi durumunda çalışacak kurallar. */
+.song-card:hover{
+    /* Kartı Y ekseninde (dikeyde) 5 piksel yukarı doğru kaydırır (havalanma efekti). */
+    transform:translateY(-5px);
+    /* Kartın etrafına sarı renkte, %25 saydamlığında bir parlama/neon gölge efekti verir. */
+    box-shadow:0 0 25px rgba(255,242,0,.25);
+}
+
+/* Şarkı kartının sol tarafında bulunan, nota veya görseli tutan kare kutu. */
+.song-icon{
+    /* Kutunun genişliğini 75 piksel yapar. */
+    width:75px;
+    /* Kutunun yüksekliğini 75 piksel yapar. */
+    height:75px;
+    /* Kutunun köşelerini 15 piksel yuvarlatır. */
+    border-radius:15px;
+    /* İçindeki ikonu ortalamak için Flexbox kullanır. */
+    display:flex;
+    /* İkonu dikey eksende ortalar. */
+    align-items:center;
+    /* İkonu yatay eksende ortalar. */
+    justify-content:center;
+    /* İkonun (font tabanlı ise) boyutunu 34 piksel yapar. */
+    font-size:34px;
+    /* Arka planını sarı rengin %18 saydam haliyle doldurur (soluk sarımsı bir fon). */
+    background:rgba(255,242,0,.18);
+}
+
+/* Şarkı adı ve sanatçı bilgilerini saran orta bölüm. */
+.song-info{
+    /* Bu alanın, flex kutusu içinde ikon ve butonlardan arta kalan tüm boş alanı esnekçe doldurmasını sağlar. */
+    flex:1;
+}
+
+/* Şarkı kartı içindeki ana başlık (örneğin Şarkı Adı). */
+.song-info h5{
+    /* Varsayılan dış boşlukları (margin) sıfırlar. */
+    margin:0;
+    /* Yazı boyutunu 18 piksel yapar. */
+    font-size:18px;
+    /* Yazı rengini açık bir lila/beyaz tonu (#ddd9ff) yapar. */
+    color:#ddd9ff;
+}
+
+/* Şarkı kartı içindeki alt metin (örneğin Sanatçı Adı). */
+.song-info p{
+    /* Üstten ve alttan 8 piksel boşluk bırakır, sağdan/soldan bırakmaz. */
+    margin:8px 0;
+    /* Yazı rengini soluk bir lila/gri ton (#8d8abe) yapar. */
+    color:#8d8abe;
+}
+
+/* Şarkıya ait küçük özellik etiketleri (örn. Pop, 120BPM, Türkçe). */
+.tag{
+    /* Etiketin metinle aynı satırda kalmasını ama yükseklik/boşluk gibi kutu özelliklerini de alabilmesini sağlar. */
+    display:inline-block;
+    /* Yazı boyutunu çok küçük (11 piksel) yapar. */
+    font-size:11px;
+    /* Yazı rengini soluk lila/gri yapar. */
+    color:#8d8abe;
+    /* Etrafına %12 beyaz saydamlığında ince bir sınır çizer. */
+    border:1px solid rgba(255,255,255,.12);
+    /* İç boşluk: Üst/alt 6 piksel, sağ/sol 12 piksel. */
+    padding:6px 12px;
+    /* Kenarlarını 20 piksel yuvarlatarak küçük bir kapsül şekli verir. */
+    border-radius:20px;
+    /* Sağındaki diğer etiketle arasına 5 piksel boşluk koyar. */
+    margin-right:5px;
+}
+
+/* Oynat ve Favorilere Ekle ikon butonlarının ortak özellikleri. */
+.play-btn,
+.fav-btn{
+    /* Tarayıcının varsayılan buton kenarlığını kaldırır. */
+    border:none;
+    /* Butonun genişliğini 42 piksel yapar. */
+    width:42px;
+    /* Butonun yüksekliğini 42 piksel yapar. */
+    height:42px;
+    /* Köşeleri %50 yuvarlatarak butonların tam bir daire şeklinde olmasını sağlar. */
+    border-radius:50%;
+    /* Arka planını %9 beyaz saydamlığına getirir (koyu temada hafif belirgin). */
+    background:rgba(255,255,255,.09);
+    /* İçindeki ikonun rengini beyaz yapar. */
+    color:#fff;
+    /* Üzerine gelince oluşacak değişimin 0.3 saniyede gerçekleşmesini sağlar. */
+    transition:.3s;
+}
+
+/* Oynat (Play) butonunun üzerine fare ile gelindiğinde çalışacak kurallar. */
+.play-btn:hover{
+    /* Arka planını parlak camgöbeği/mavi yapar. */
+    background:#00f7ff;
+    /* İçindeki ikonu koyu siyah yaparak zıtlık oluşturur ve okunaklı kılar. */
+    color:#000;
+}
+
+/* Favori (Kalp) butonunun üzerine fare ile gelindiğinde çalışacak kurallar. */
+.fav-btn:hover{
+    /* Arka planını parlak pembemsi kırmızı (#ff0077) yapar. */
+    background:#ff0077;
+}
+
+/* Sayfanın en altındaki alt bilgi (footer) veya telif hakkı kısmı. */
+footer{
+    /* İçindeki yazıları ortalar. */
+    text-align:center;
+    /* Yazı rengini koyu, soluk bir mor/gri renge getirir. */
+    color:#77739f;
+    /* Üstten ve alttan 50 piksel, yanlardan 10 piksel iç boşluk bırakır. */
+    padding:50px 10px;
+}
+
+/* MOBİL UYUMLULUK KISMI: Ekran genişliği en fazla 768 piksel olduğunda (telefonlar ve küçük tabletler) bu parantez içindeki kurallar geçerli olur. */
+@media(max-width:768px){
+    /* Yukarıda 64px olan ana logoyu mobil ekrana sığması için küçültür. */
+    .logo{
+        /* Yazı boyutunu 42 piksele düşürür. */
+        font-size:42px;
+    }
+
+    /* Alt başlık/slogan metnini mobilde okunabilir kılar. */
+    .subtitle{
+        /* Harf aralığını 12px'den 5 piksele düşürür. */
+        letter-spacing:5px;
+        /* Yazı boyutunu 15px'den 12 piksele düşürür. */
+        font-size:12px;
+    }
+
+    /* Filtre kutularını mobilde yan yana değil alt alta gösterir. */
+    .filters{
+        /* Grid şablonunu tek sütun (1fr) olarak ayarlar. */
+        grid-template-columns:1fr;
+    }
+
+    /* Şarkı önerme butonunu mobilde parmakla basmaya daha uygun hale getirir. */
+    .suggest-btn{
+        /* Butonu bulunduğu alanın tamamına yayar (%100 genişlik). */
+        width:100%;
+        /* İç boşluklarını mobilde taşmaması için yeniden ayarlar (üst/alt 18px, sağ/sol 20px). */
+        padding:18px 20px;
+        /* Yazı boyutunu 14 piksele küçültür. */
+        font-size:14px;
+    }
+
+    /* Sonuçlar kısmının başlığını mobilde alt alta dizecek şekilde değiştirir. */
+    .result-head{
+        /* İçeriği yan yana (row) dizmek yerine alt alta (column) dizer. Başlık üstte, 'Karıştır' butonu altta kalır. */
+        flex-direction:column;
+        /* Başlık ile buton arasına 20 piksel boşluk ekler. */
+        gap:20px;
+        /* İkisini de sola hizalar. */
+        align-items:flex-start;
+    }
+
+    /* Şarkı kartı içeriğini mobilde dar alanlar için yeniden yapılandırır. */
+    .song-card{
+        /* İkon, şarkı bilgisi ve butonları yatay hizada tutmak yerine dikeyde alt alta dizer. */
+        flex-direction:column;
+        /* Kartın içindeki yazıları ve elemanları ortalar. */
+        text-align:center;
+    }
+}

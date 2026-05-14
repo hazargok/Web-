@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<!-- Belgenin HTML5 formatında olduğunu tarayıcıya bildirir -->
+<html lang="tr">
+<head>
+    <!-- Karakter kodlamasını UTF-8 (Türkçe karakter desteği) olarak ayarlar -->
+    <meta charset="UTF-8">
+    <!-- Sayfanın mobil cihazlarda doğru boyutta görünmesini sağlar -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MoodTune</title>
+
+    <!-- Bootstrap 5: Hazır tasarım bileşenleri ve ızgara (grid) sistemi için kullanılır -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Google Fonts: Projenin fütüristik görünmesi için 'Orbitron' yazı tipini yükler -->
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;800&display=swap" rel="stylesheet">
+    <!-- Kendi yazdığımız özel CSS kurallarının olduğu dosya -->
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<!-- Arka plandaki hareketli yıldız efekti için boş bir katman -->
+<div class="stars"></div>
+
+<!-- Hero Section: Sayfanın giriş (başlık) kısmı -->
+<header class="hero">
+    <div class="container text-center">
+        <!-- Uygulama ismi (Logo) -->
+        <h1 class="logo">MoodTune</h1>
+        <p class="subtitle">RUH HALİNE GÖRE MÜZİK · MOOD BASED MUSIC</p>
+
+        <!-- Equalizer: Görsel olarak müzik ritmi efekti veren 5 adet çubuk -->
+        <div class="equalizer">
+            <span></span><span></span><span></span><span></span><span></span>
+        </div>
+
+        <h4 class="section-title">// RUH HALİNİ SEÇ</h4>
+
+        <!-- Mood Area: Kullanıcının modunu seçtiği tıklanabilir kartlar alanı -->
+        <!-- 'row g-4': Bootstrap ile kartlar arası boşluk ve yan yana dizilim sağlar -->
+        <div class="row g-4 mood-area">
+
+            <!-- Her bir 'mood-card' bir ruh halini temsil eder. 
+                 'data-mood' özniteliği, JavaScript'in hangi modun seçildiğini anlamasını sağlar. -->
+            <div class="col-6 col-md-3">
+                <div class="mood-card active" data-mood="mutlu">
+                    <div class="emoji">😄</div>
+                    <h5>MUTLU</h5>
+                </div>
+            </div>
+
+            <div class="col-6 col-md-3">
+                <div class="mood-card" data-mood="huzunlu">
+                    <div class="emoji">🥺</div>
+                    <h5>HÜZÜNLÜ</h5>
+                </div>
+            </div>
+
+            <div class="col-6 col-md-3">
+                <div class="mood-card" data-mood="enerjik">
+                    <div class="emoji">⚡</div>
+                    <h5>ENERJİK</h5>
+                </div>
+            </div>
+
+            <div class="col-6 col-md-3">
+                <div class="mood-card" data-mood="romantik">
+                    <div class="emoji">💕</div>
+                    <h5>ROMANTİK</h5>
+                </div>
+            </div>
+
+            <div class="col-6 col-md-3">
+                <div class="mood-card" data-mood="sakin">
+                    <div class="emoji">🌿</div>
+                    <h5>SAKİN</h5>
+                </div>
+            </div>
+
+            <div class="col-6 col-md-3">
+                <div class="mood-card" data-mood="odakli">
+                    <div class="emoji">🎯</div>
+                    <h5>ODAKLI</h5>
+                </div>
+            </div>
+
+            <div class="col-6 col-md-3">
+                <div class="mood-card" data-mood="nostalji">
+                    <div class="emoji">🌙</div>
+                    <h5>NOSTALJİ</h5>
+                </div>
+            </div>
+
+            <div class="col-6 col-md-3">
+                <div class="mood-card" data-mood="guclu">
+                    <div class="emoji">🔥</div>
+                    <h5>GÜÇLÜ</h5>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</header>
+
+<!-- Main Section: Filtreleme ve sonuçların gösterildiği ana içerik -->
+<main class="container">
+
+    <!-- Filters: Müzik türü ve tempo seçim butonları -->
+    <section class="filters">
+        <!-- Müzik Türü Filtresi -->
+        <div class="filter-box">
+            <h6>◈ MÜZİK TÜRÜ</h6>
+            <!-- data-type: JavaScript'in müzik türüne göre filtreleme yapması için kullanılır -->
+            <button class="filter-btn active" data-type="all">Hepsi</button>
+            <button class="filter-btn" data-type="pop">Pop</button>
+            <button class="filter-btn" data-type="rock">Rock</button>
+            <button class="filter-btn" data-type="electronic">Electronic</button>
+            <button class="filter-btn" data-type="hiphop">Hip-Hop</button>
+            <button class="filter-btn" data-type="jazz">Jazz</button>
+            <button class="filter-btn" data-type="klasik">Klasik</button>
+            <button class="filter-btn" data-type="turkce">Türkçe</button>
+        </div>
+
+        <!-- Tempo Filtresi -->
+        <div class="filter-box">
+            <h6>◈ TEMPO</h6>
+            <!-- data-tempo: JavaScript'in şarkı hızına göre filtreleme yapması için kullanılır -->
+            <button class="tempo-btn active" data-tempo="all">Hepsi</button>
+            <button class="tempo-btn" data-tempo="yavas">Yavaş</button>
+            <button class="tempo-btn" data-tempo="orta">Orta</button>
+            <button class="tempo-btn" data-tempo="hizli">Hızlı</button>
+        </div>
+    </section>
+
+    <!-- Ana Aksiyon Butonu: Müzik listesini getiren tetikleyici -->
+    <div class="text-center">
+        <button id="suggestBtn" class="suggest-btn">🎵 MÜZİK ÖNER</button>
+    </div>
+
+    <!-- Results Section: Şarkıların listelendiği alan -->
+    <section class="results">
+        <div class="result-head">
+            <div>
+                <h4>// SENİN İÇİN SEÇTİKLERİMİZ</h4>
+                <!-- JavaScript buradaki yazıyı seçilen moda göre dinamik günceller -->
+                <span id="resultInfo">😄 Mutlu için 8 şarkı</span>
+            </div>
+
+            <!-- Listeyi rastgele tekrar karıştırmak için buton -->
+            <button id="shuffleBtn" class="shuffle-btn">↻ Karıştır</button>
+        </div>
+
+        <!-- songList: JavaScript tarafından oluşturulan şarkı kartları buraya enjekte edilir -->
+        <div class="row g-4" id="songList"></div>
+    </section>
+
+    <!-- Favorites Section: Kullanıcının kalp ikonuna basarak eklediği şarkılar -->
+    <section class="favorites">
+        <h4>// FAVORİLER</h4>
+        <div class="row g-4" id="favoriteList"></div>
+    </section>
+
+</main>
+
+<!-- Footer: Sayfa alt bilgisi -->
+<footer>
+    <p>©️ 2026 MoodTune | Mood Based Music Recommender</p>
+</footer>
+
+<!-- Kütüphaneler ve Scriptler -->
+<!-- jQuery: JavaScript kodlarımızı daha kolay ve hızlı yazmak için kullanılan kütüphane -->
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<!-- Uygulamanın mantığını (mantıksal işlemlerini) yürüten JavaScript dosyamız -->
+<script src="script.js"></script>
+
+</body>
+</html>
